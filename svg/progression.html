@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <title>Progression circle</title>
+        <script type="text/javascript" src="progression.js"></script>
+    </head>
+    <body>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    a40,40 0 0,1 40,40
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    a40,40 0 0,1 0,80
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    a40,40 0 1,1 -40,40
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    a40,40 0 1,1 -40,40
+                    a40,40 0 1,1 40,40
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    A40,40 0 0,1 78.2842712474619,21.71572875253809
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    A40,40 0 1,1 50,90
+                    A40,40 0 0,1 21.7157287525381,78.2842712474619
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="red" />
+            <path
+                d=" M50,50 l0,-40
+                    A40,40 0 1,1 50,90
+                    A40,40 0 0,1 21.7157287525381,21.7157287525381
+                    z"
+                stroke="purple"
+                fill="green"
+                />
+        </svg>
+        <p>
+            Calculations:
+            <br>
+            x = cx (center x) + r * cos(angle (radian))
+            <br>
+            y = cy (center y) + r * sin(angle (rading))
+            <br>
+            <br>
+            1/8: x = <span id="cx18"></span>
+            <br>
+            1/8: y = <span id="cy18"></span>
+            <br>
+            <br>
+            3/8: x = <span id="cx38"></span>
+            <br>
+            3/8: y = <span id="cy38"></span>
+            <br>
+            <br>
+            5/8: x = <span id="cx58"></span>
+            <br>
+            5/8: y = <span id="cy58"></span>
+            <br>
+            <br>
+            7/8: x = <span id="cx78"></span>
+            <br>
+            7/8: y = <span id="cy78"></span>
+        </p>
+        <script>
+            document.getElementById('cx18').innerText = 50 + 40 * Math.cos(1.75 * Math.PI);
+            document.getElementById('cy18').innerText = 50 + 40 * Math.sin(1.75 * Math.PI);
+
+            document.getElementById('cx38').innerText = 50 + 40 * Math.cos(0.25 * Math.PI);
+            document.getElementById('cy38').innerText = 50 + 40 * Math.sin(0.25 * Math.PI);
+
+            document.getElementById('cx58').innerText = 50 + 40 * Math.cos(0.75 * Math.PI);
+            document.getElementById('cy58').innerText = 50 + 40 * Math.sin(0.75 * Math.PI);
+
+            document.getElementById('cx78').innerText = 50 + 40 * Math.cos(1.25 * Math.PI);
+            document.getElementById('cy78').innerText = 50 + 40 * Math.sin(1.25 * Math.PI);
+        </script>
+        <svg viewBox="0 0 100 100" width="100" height="100" id="functionalProgress">
+            <circle cx="50" cy="50" r="48" fill="transparent" stroke-width="4" stroke="grey" />
+            <path
+                d=" M50,50 l0,-40
+                    a40,40 0 0,1 40,40
+                    z"
+                fill="grey"
+                transform="rotate(-90 50 50)"
+                id="progressCircle"
+                />
+            <circle cx='50' cy='50' r='40' fill='grey' id='fullCircle' />
+        </svg>
+        <br />
+        <input type="number" value="25" min='0' max='100' style="font-size: 20pt;" id='progression' />
+    </body>
+</html>

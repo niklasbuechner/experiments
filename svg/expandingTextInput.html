@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Expanding TextInput</title>
+		<style type="text/css">
+			.button {
+				border-radius: 3px;
+				height: 24px;
+			}
+			.child {
+				position: absolute;
+			}
+
+			.button:hover {
+				background: lightgrey;
+			}
+			input {
+				outline: none;
+				border: 0;
+				background: transparent;
+				caret-color: lightblue;
+				width: 100px;
+				height: 20px;
+			}
+			.bar {
+				text-align: right;
+				background: yellow;
+				position: relative;
+			}
+			.animate-transform-to-half-way-point {
+				transition: 1.5s ease-in;
+			}
+			.animate-transform-from-half-way-point {
+				transition: 1.5s ease-out;
+			}
+		</style>
+		<script type="text/javascript" src="expandingTextInput.js"></script>
+	</head>
+	<body>
+		<h1>Expanding TextInput</h1>
+		<div class='bar' id="bar"></div>
+	</body>
+</html>
