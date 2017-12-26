@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Expanding Text Input SVG</title>
+		<style type="text/css">
+			#background {
+				width:30px;
+				/*animation: 3s linear reverse growth;*/
+			}
+
+			@keyframes growth {
+				from {
+					width: 30px;
+				}
+				to {
+					width: 130px;
+				}
+			}
+		</style>
+		<script type="text/javascript">
+			function clearAnimation(width) {
+				const background = document.getElementById('background');
+
+				background.style.animation = '';
+				background.style.width = `${width}px`;
+			}
+
+			function showIcon() {
+				const background = document.getElementById('background');
+				const button = document.getElementById('button0');
+
+				background.style.animation = '3s linear growth';
+				background.addEventListener('animationend', () => {
+					clearAnimation(130);
+				});
+
+				button.removeEventListener('click', showIcon);
+				button.addEventListener('click', hideIcon);
+			}
+
+			function hideIcon() {
+				const background = document.getElementById('background');
+				const button = document.getElementById('button0');
+
+				background.style.animation = '3s linear reverse growth';
+				background.addEventListener('animationend', () => {
+					clearAnimation(30);
+				});
+
+				button.removeEventListener('click', hideIcon);
+				button.addEventListener('click', showIcon);
+			}
+
+			window.addEventListener('load', () => {
+				document.getElementById('button0').addEventListener('click', showIcon);
+			});
+		</script>
+	</head>
+	<body>
+		<h1>SVG Expanding Text Input</h1>
+		<svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg" width="200" height="40" id="button0">
+			<rect x="0" y="0" width="30" height="30" rx="3" fill="red" id="background" />
+			<rect x="5" y="5" width="20" height="20" fill="blue" />
+			<text x="30" y="22" font-family="Arial" font-size="20">
+				Tags
+			</text>
+		</svg>
+	</body>
+</html>
