@@ -3,9 +3,12 @@
 	<head>
 		<title>Expanding Text Input SVG</title>
 		<style type="text/css">
+			svg {
+				border: 1px solid black;
+			}
 			#background {
 				width:30px;
-				/*animation: 3s linear reverse growth;*/
+				/*animation: 150ms linear reverse growth;*/
 			}
 
 			@keyframes growth {
@@ -17,19 +20,26 @@
 				}
 			}
 		</style>
+		<style type="text/css" id="computedStyle"></style>
+		<script type="text/javascript" src="expandingTextInput.js"></script>
 		<script type="text/javascript">
 			function clearAnimation(width) {
 				const background = document.getElementById('background');
+				const clipPath = document.getElementById('textClip');
 
 				background.style.animation = '';
+				clipPath.style.animation = '';
 				background.style.width = `${width}px`;
+				clipPath.style.width = `${width}px`;
 			}
 
 			function showIcon() {
 				const background = document.getElementById('background');
+				const clipPath = document.getElementById('textClip');
 				const button = document.getElementById('button0');
 
-				background.style.animation = '3s linear growth';
+				background.style.animation = '150ms linear growth';
+				clipPath.style.animation = '150ms linear growth';
 				background.addEventListener('animationend', () => {
 					clearAnimation(130);
 				});
@@ -40,9 +50,11 @@
 
 			function hideIcon() {
 				const background = document.getElementById('background');
+				const clipPath = document.getElementById('textClip');
 				const button = document.getElementById('button0');
 
-				background.style.animation = '3s linear reverse growth';
+				background.style.animation = '150ms linear reverse growth';
+				clipPath.style.animation = '150ms linear reverse growth';
 				background.addEventListener('animationend', () => {
 					clearAnimation(30);
 				});
@@ -59,9 +71,14 @@
 	<body>
 		<h1>SVG Expanding Text Input</h1>
 		<svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg" width="200" height="40" id="button0">
+			<defs>
+				<clipPath id="expandingText">
+					<rect x="0" y="0" width="30" height="30" id="textClip" />
+				</clipPath>
+			</defs>
 			<rect x="0" y="0" width="30" height="30" rx="3" fill="red" id="background" />
 			<rect x="5" y="5" width="20" height="20" fill="blue" />
-			<text x="30" y="22" font-family="Arial" font-size="20">
+			<text x="30" y="22" font-family="Arial" font-size="20" clip-path="url(#expandingText)">
 				Tags
 			</text>
 		</svg>
