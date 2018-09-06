@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>HTML Positioning</title>
+		<style>
+		#wrapper {
+			width: 800;
+			margin: auto;
+		}
+		.list-element {
+			position: relative;
+		}
+		.headline {
+			background: red;
+			z-index: 10;
+		}
+		.overlay {
+			background: linear-gradient(rgba(0,0,0,0), white 50%);
+			z-index: 5;
+			position: absolute;
+			top: 50px;
+			display: block;
+			width: 760px;
+		}
+		.detail {
+			background: yellow;
+		}
+		.hidden {
+			visibility: hidden;
+			display: none;
+		}
+		div {
+			padding: 10px;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<h1>HTML Positioning</h1>
+			<div class="list-element">
+				<div class="headline">Hello World</div>
+				<div class="detail">Hello World las alsd asioda sdakjsdbahds asd ajsdabsgdasf fvx cvnvr vxm eyv vmx zueznd hyev.</div>
+				<div class="overlay">&nbsp;</div>
+			</div>
+			<div class="list-element">
+				<div class="headline">Hello World</div>
+				<div class="overlay hidden">&nbsp;</div>
+				<div class="detail hidden">Hello World las alsd asioda sdakjsdbahds asd ajsdabsgdasf fvx cvnvr vxm eyv vmx zueznd hyev.</div>
+			</div>
+			<div class="list-element">
+				<div class="headline">Hello World</div>
+				<div class="overlay hidden">&nbsp;</div>
+				<div class="detail hidden">Hello World las alsd asioda sdakjsdbahds asd ajsdabsgdasf fvx cvnvr vxm eyv vmx zueznd hyev.</div>
+			</div>
+		</div>
+	</body>
+</html>

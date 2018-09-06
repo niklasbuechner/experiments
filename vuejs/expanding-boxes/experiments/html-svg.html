@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<title>SVG</title>
+	</head>
+	<body>
+		<svg width="100" height="100" viewBox="0 0 100 100">
+			<defs>
+				<linearGradient id="whiteGradient" gradientTransform="rotate(90)">
+					<stop stop-color="rgba(255, 255, 255, 0)" offset="0%" />
+					<stop stop-color="white" offset="50%" />
+				</linearGradient>
+			</defs>`
+			<rect x="0" y="0" width="100" height="100" fill="blue" />
+			<rect x="0" y="0" width="100" height="100" fill="url(#whiteGradient)" />
+		</svg>
+	</body>
+</html>
