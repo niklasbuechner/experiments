@@ -1,10 +1,30 @@
 use std::char::ParseCharError;
 use std::str::FromStr;
+use std::fmt::{Display, Formatter, Result as FormatResult};
 
 pub struct GapBuffer {
     pub content: Vec<char>,
     pub gap_size: usize,
     pub gap_position: usize,
+}
+impl GapBuffer {
+    pub fn visualize_gap(&self, visualizer: char) -> String {
+        let mut index = 0;
+        let mut content = String::with_capacity(self.content.len() - self.gap_size);
+
+        for i in 0..self.content.len() {
+            let character = self.content[i];
+            if index >= self.gap_position && index < self.gap_position + self.gap_size {
+                content.push(visualizer);
+            } else {
+                content.push(character);
+            }
+
+            index += 1;
+        }
+
+        format!("{}--DONE--", content)
+    }
 }
 impl FromStr for GapBuffer {
     type Err = ParseCharError;
@@ -42,5 +62,22 @@ impl FromStr for GapBuffer {
             gap_size: 100,
             gap_position,
         })
+    }
+}
+impl Display for GapBuffer {
+    fn fmt(&self, formatter: &mut Formatter) -> FormatResult {
+        let mut index = 0;
+        let mut content = String::with_capacity(self.content.len() - self.gap_size);
+
+        for i in 0..self.content.len() {
+            let character = self.content[i];
+            if index < self.gap_position || index >= self.gap_position + self.gap_size {
+                content.push(character);
+            }
+
+            index += 1;
+        }
+
+        write!(formatter, "{}", content)
     }
 }

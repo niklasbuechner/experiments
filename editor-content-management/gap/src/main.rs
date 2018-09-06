@@ -14,18 +14,8 @@ fn main() {
     println!("Time used: {}", get_timestamp() - time);
     // Initialize gap buffer
 
-    let mut index = 0;
-    for character in gap_buffer.content.into_iter() {
-        if index >= gap_buffer.gap_position && index < gap_buffer.gap_position + gap_buffer.gap_size {
-            print!("_");
-        } else {
-            print!("{}", character);
-        }
-
-        index += 1;
-    }
-
     println!("Gap method!");
+    println!("{}", gap_buffer.visualize_gap('§'));
 }
 
 fn load_file_contents(url: &str) -> std::io::Result<String> {
