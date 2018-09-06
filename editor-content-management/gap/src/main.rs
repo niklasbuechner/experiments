@@ -10,12 +10,23 @@ fn main() {
     let small_file_content = load_file_contents("/Users/Niklas/Development/Apache/www/experiments/editor-content-management/editor-content-small.txt").unwrap();
 
     let time = get_timestamp();
-    let gap_buffer = GapBuffer::from_str(&small_file_content).unwrap();
+    let mut gap_buffer = GapBuffer::from_str(&small_file_content).unwrap();
     println!("Time used: {}", get_timestamp() - time);
     // Initialize gap buffer
 
     println!("Gap method!");
-    println!("{}", gap_buffer.visualize_gap('§'));
+    println!("{}", gap_buffer.visualize_gap());
+
+    println!("");
+    println!("");
+
+    let time = get_timestamp();
+    gap_buffer.insert(0, 5, &mut "_really".to_string());
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
+    gap_buffer.insert(0, 0, &mut "Ho".to_string());
+    println!("{}", gap_buffer.visualize_gap());
 }
 
 fn load_file_contents(url: &str) -> std::io::Result<String> {
