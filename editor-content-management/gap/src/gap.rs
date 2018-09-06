@@ -2,6 +2,13 @@ use std::char::ParseCharError;
 use std::str::FromStr;
 use std::fmt::{Display, Formatter, Result as FormatResult};
 
+/// TODO: Tests inserting
+///  - beginning of buffer
+///  - end of buffer
+///  - middle of buffer
+///  - moving the gap forwards
+///  - moving the gap backwards
+/// TODO: increase gap size if it's to small
 pub struct GapBuffer {
     pub content: Vec<char>,
     pub gap_size: usize,
@@ -22,7 +29,6 @@ impl GapBuffer {
     pub fn insert(&mut self, line: u64, character:u64, insert: &mut String) {
         let offset = self.get_offset(line, character);
         self.move_gap(offset);
-        println!("Moved gap - offset: {}", offset);
         self.insert_into_gap(insert);
     }
 
@@ -40,7 +46,7 @@ impl GapBuffer {
             }
 
             if line_count == line && character_count == character {
-                return index;
+                return if index > self.gap_position { index - self.gap_size } else { index };
             }
 
             character_count += 1;
@@ -53,7 +59,7 @@ impl GapBuffer {
                 character_count = 0;
                 line_count += 1;
 
-                if self.content[index + 1] == '\n' {
+                if index + 1 < content_length && self.content[index + 1] == '\n' {
                     index += 1;
                 }
             }
@@ -61,7 +67,7 @@ impl GapBuffer {
             index += 1;
         }
 
-        return 0;
+        return if index > self.gap_position { index - self.gap_size } else { index };
     }
 
     fn move_gap(&mut self, offset: usize) {
@@ -72,6 +78,16 @@ impl GapBuffer {
                 let character = self.content[self.gap_position - 1 - i];
                 self.content[self.gap_position + self.gap_size - 1 - i] = character;
                 self.content[self.gap_position - 1 - i] = 'ä';
+            }
+
+            self.gap_position = offset;
+        } else {
+            let character_amount_to_copy = offset - self.gap_position;
+
+            for i in 0..character_amount_to_copy {
+                let character = self.content[self.gap_position + self.gap_size + i];
+                self.content[self.gap_position + i] = character;
+                self.content[self.gap_position + self.gap_size + i] = 'ä';
             }
 
             self.gap_position = offset;
@@ -96,6 +112,7 @@ impl FromStr for GapBuffer {
 
     fn from_str(content_str: &str) -> Result<Self, Self::Err> {
         let mut content = content_str.to_string();
+        content.push(' ');
         let content_length = content.len();
         let mut gap_inserted = false;
         let gap_position = content_length / 2;

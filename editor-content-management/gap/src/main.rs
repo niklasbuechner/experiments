@@ -12,7 +12,6 @@ fn main() {
     let time = get_timestamp();
     let mut gap_buffer = GapBuffer::from_str(&small_file_content).unwrap();
     println!("Time used: {}", get_timestamp() - time);
-    // Initialize gap buffer
 
     println!("Gap method!");
     println!("{}", gap_buffer.visualize_gap());
@@ -21,11 +20,28 @@ fn main() {
     println!("");
 
     let time = get_timestamp();
+    gap_buffer.insert(0, 5, &mut "_good".to_string());
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
+    let time = get_timestamp();
     gap_buffer.insert(0, 5, &mut "_really".to_string());
     println!("Time used: {}", get_timestamp() - time);
     println!("{}", gap_buffer.visualize_gap());
 
-    gap_buffer.insert(0, 0, &mut "Ho".to_string());
+    let time = get_timestamp();
+    gap_buffer.insert(0, 5, &mut "_is".to_string());
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
+    let time = get_timestamp();
+    gap_buffer.insert(0, 0, &mut "<php>".to_string());
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
+    let time = get_timestamp();
+    gap_buffer.insert(19, 0, &mut "</php>".to_string());
+    println!("Time used: {}", get_timestamp() - time);
     println!("{}", gap_buffer.visualize_gap());
 }
 
