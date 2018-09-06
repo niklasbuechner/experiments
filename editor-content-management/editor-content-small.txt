@@ -1,0 +1,18 @@
+<?php
+namespace Hello\World;
+
+/**
+ * Hello world class.
+ */
+class HelloWorld
+{
+    /**
+     * Function to say hi.
+     *
+     * @return string
+     */
+    public function hi()
+    {
+        return "hi";
+    }
+}
