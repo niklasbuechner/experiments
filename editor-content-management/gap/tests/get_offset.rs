@@ -15,3 +15,10 @@ fn after_gap() {
 
     assert_eq!(13, buffer.get_offset(0,13));
 }
+
+#[test]
+fn line_counting() {
+    let buffer = gap::GapBuffer::from_str("Before gap\n\n\n\nAfter gap").unwrap();
+
+    assert_eq!(14, buffer.get_offset(4,0));
+}
