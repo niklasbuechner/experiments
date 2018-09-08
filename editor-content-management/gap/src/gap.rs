@@ -8,7 +8,6 @@ use std::fmt::{Display, Formatter, Result as FormatResult};
 ///  - middle of buffer
 ///  - moving the gap forwards
 ///  - moving the gap backwards
-/// TODO: increase gap size if it's to small
 pub struct GapBuffer {
     pub content: Vec<char>,
     pub gap_size: usize,
@@ -29,6 +28,11 @@ impl GapBuffer {
     pub fn insert(&mut self, line: u64, character:u64, insert: &mut String) {
         let offset = self.get_offset(line, character);
         self.move_gap(offset);
+
+        if self.gap_size < 10 || self.gap_size < insert.len() {
+            self.increase_gap_size_by(insert.len());
+        }
+
         self.insert_into_gap(insert);
     }
 
@@ -124,6 +128,26 @@ impl GapBuffer {
 
         self.gap_position = start_offset;
         self.gap_size += end_offset - start_offset + 1;
+    }
+
+    fn increase_gap_size_by(&mut self, at_least: usize) {
+        let size_increase = ((at_least / 10) as usize + 1) * 10;
+        let size = self.content.len();
+        let new_size = size + size_increase;
+        let max_offset = size - 1;
+        let new_max_offset = new_size - 1;
+
+        self.content.resize(new_size, 'ö');
+
+        for i in 0..size - self.gap_position - self.gap_size {
+            self.content[new_max_offset - i] = self.content[max_offset - i];
+        }
+
+        for i in 0..size_increase {
+            self.content[self.gap_position + self.gap_size + i] = 'ä';
+        }
+
+        self.gap_size = self.gap_size + size_increase;
     }
 }
 impl FromStr for GapBuffer {
