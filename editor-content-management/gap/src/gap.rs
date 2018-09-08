@@ -41,9 +41,18 @@ impl GapBuffer {
         let end_offset = self.get_offset(end_line, end_character);
 
         self.delete_characters(start_offset, end_offset);
+
+        if self.gap_size > 200 {
+            self.resize_gap();
+        }
     }
 
-    fn get_offset(&self, line: u64, character: u64) -> usize {
+    pub fn get_at(&self, line: u64, character: u64) -> char {
+        println!("Offset {}", self.get_offset(line, character));
+        self.content[self.get_offset(line, character)]
+    }
+
+    pub fn get_offset(&self, line: u64, character: u64) -> usize {
         let content_length = self.content.len();
         let mut character_count = 0;
         let mut index = 0;
@@ -148,6 +157,19 @@ impl GapBuffer {
         }
 
         self.gap_size = self.gap_size + size_increase;
+    }
+
+    fn resize_gap(&mut self) {
+        let unnecessary_size = self.gap_size - 100;
+        let new_size = self.content.len() - unnecessary_size;
+
+        for i in self.gap_position + 100..new_size {
+            self.content[i] = self.content[i + unnecessary_size];
+            self.content[i + unnecessary_size] = 'ü';
+        }
+
+        self.content.resize(new_size, ' ');
+        self.gap_size = 100;
     }
 }
 impl FromStr for GapBuffer {

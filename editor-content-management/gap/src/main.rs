@@ -54,6 +54,18 @@ fn main() {
     println!("Time used: {}", get_timestamp() - time);
     println!("{}", gap_buffer.visualize_gap());
 
+    let time = get_timestamp();
+    gap_buffer.insert(0, 0, &mut "123456789012345678901234567890123456789012356789012345678901234567890123456789012345678901234567890\n".to_string());
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
+    println!("\n\n At {}", gap_buffer.get_at(1, 99));
+
+    let time = get_timestamp();
+    gap_buffer.delete(0, 0, 1, 100);
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
     println!("{}", gap_buffer.to_string());
 }
 
