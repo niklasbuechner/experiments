@@ -40,9 +40,17 @@ fn main() {
     println!("{}", gap_buffer.visualize_gap());
 
     let time = get_timestamp();
+    gap_buffer.delete(0, 13, 0, 19);
+    println!("Time used: {}", get_timestamp() - time);
+    println!("{}", gap_buffer.visualize_gap());
+
+    let time = get_timestamp();
     gap_buffer.insert(19, 0, &mut "</php>".to_string());
     println!("Time used: {}", get_timestamp() - time);
     println!("{}", gap_buffer.visualize_gap());
+
+
+    println!("{}", gap_buffer.to_string());
 }
 
 fn load_file_contents(url: &str) -> std::io::Result<String> {

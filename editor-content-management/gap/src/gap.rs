@@ -32,6 +32,13 @@ impl GapBuffer {
         self.insert_into_gap(insert);
     }
 
+    pub fn delete(&mut self, start_line: u64, start_character:u64, end_line: u64, end_character: u64) {
+        let start_offset = self.get_offset(start_line, start_character);
+        let end_offset = self.get_offset(end_line, end_character);
+
+        self.delete_characters(start_offset, end_offset);
+    }
+
     fn get_offset(&self, line: u64, character: u64) -> usize {
         let content_length = self.content.len();
         let mut character_count = 0;
@@ -105,6 +112,18 @@ impl GapBuffer {
 
         self.gap_position += insert_length;
         self.gap_size -= insert_length;
+    }
+
+    fn delete_characters(&mut self, start_offset: usize, end_offset: usize) {
+        self.move_gap(end_offset + 1);
+
+        // The number behind the two dots is excluded, therefore increment by one.
+        for i in start_offset..end_offset + 1 {
+            self.content[i] = 'ä';
+        }
+
+        self.gap_position = start_offset;
+        self.gap_size += end_offset - start_offset + 1;
     }
 }
 impl FromStr for GapBuffer {
