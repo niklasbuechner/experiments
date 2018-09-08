@@ -48,10 +48,16 @@ impl GapBuffer {
     }
 
     pub fn get_at(&self, line: u64, character: u64) -> char {
-        println!("Offset {}", self.get_offset(line, character));
-        self.content[self.get_offset(line, character)]
+        let mut offset = self.get_offset(line, character);
+
+        if offset >= self.gap_position {
+            offset += self.gap_size;
+        }
+
+        self.content[offset]
     }
 
+    /// Returns the offset of the character as if there was no gap.
     pub fn get_offset(&self, line: u64, character: u64) -> usize {
         let content_length = self.content.len();
         let mut character_count = 0;
