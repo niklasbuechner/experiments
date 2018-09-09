@@ -190,7 +190,7 @@ impl FromStr for GapBuffer {
         let mut last_char = content.pop();
 
         let mut content_buffer = Vec::with_capacity(content_length + 100);
-        content_buffer.resize(content_length + 100,' ');
+        content_buffer.resize(content_length + 100,'ö');
 
         while let Some(character) = last_char {
             let mut index = content.len();
