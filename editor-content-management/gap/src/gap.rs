@@ -224,7 +224,7 @@ impl Display for GapBuffer {
 
         for i in 0..self.content.len() {
             let character = self.content[i];
-            if index < self.gap_position || index >= self.gap_position + self.gap_size {
+            if index < self.gap_position || index >= self.gap_position + self.gap_size && i < self.content.len() - 1 {
                 content.push(character);
             }
 
