@@ -2,12 +2,6 @@ use std::char::ParseCharError;
 use std::str::FromStr;
 use std::fmt::{Display, Formatter, Result as FormatResult};
 
-/// TODO: Tests inserting
-///  - beginning of buffer
-///  - end of buffer
-///  - middle of buffer
-///  - moving the gap forwards
-///  - moving the gap backwards
 pub struct GapBuffer {
     pub content: Vec<char>,
     pub gap_size: usize,
