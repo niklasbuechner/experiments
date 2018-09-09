@@ -176,33 +176,27 @@ impl FromStr for GapBuffer {
     type Err = ParseCharError;
 
     fn from_str(content_str: &str) -> Result<Self, Self::Err> {
-        let mut content = content_str.to_string();
-        content.push(' ');
-        let content_length = content.len();
-        let mut gap_inserted = false;
-        let gap_position = content_length / 2;
-        let mut last_char = content.pop();
+        let content_length = content_str.len() + 101;
+        let gap_position = content_str.len() / 2 as usize;
+        let mut index_offset = 0;
 
-        let mut content_buffer = Vec::with_capacity(content_length + 100);
-        content_buffer.resize(content_length + 100,'ö');
+        let mut content_buffer = Vec::with_capacity(content_length);
+        content_buffer.resize(content_length,'ö');
 
-        while let Some(character) = last_char {
-            let mut index = content.len();
-            if !gap_inserted {
-                if index == gap_position {
-                    for i in 0..100 {
-                        let gap_index = index + i;
-                        content_buffer[gap_index] = 'ä';
-                    }
-
-                    gap_inserted = true;
+        for (index, character) in content_str.chars().enumerate() {
+            if index == gap_position {
+                for i in 0..100 {
+                    let gap_index = index + i;
+                    content_buffer[gap_index] = 'ä';
                 }
-                index += 100;
+
+                index_offset = 100;
             }
 
-            content_buffer[index] = character;
-            last_char = content.pop();
+            content_buffer[index + index_offset] = character;
         }
+
+        content_buffer[content_length - 1] = ' ';
 
         Ok(GapBuffer {
             content: content_buffer,
