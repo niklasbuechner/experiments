@@ -68,7 +68,7 @@ impl ContentManager for PieceTable {
                 split_piece.child_id = piece.child_id;
                 parent_piece_text_length = piece.length;
                 parent_piece_child_id = piece.child_id;
-                piece.length = piece.length - (piece.length - parent_offset);
+                piece.length = parent_offset;
             }
             None => panic!("A non existent piece in the piece table was requested"),
         };
