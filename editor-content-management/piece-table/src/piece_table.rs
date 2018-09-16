@@ -200,6 +200,14 @@ impl Piece {
             }
         }
 
+        // Insert after last character
+        if line_count >= line && character_count == character {
+            return (self.id, self.length);
+        } else {
+            println!("Line_count {}", line_count);
+            println!("character_count {}", character_count);
+        }
+
         let child_id = match self.child_id {
             Some(child_id) => child_id,
             None => return (self.id, self.length - 1),
