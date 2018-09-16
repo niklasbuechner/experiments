@@ -40,6 +40,8 @@ impl ContentManager for PieceTable {
             None => panic!("Piece Table initialized incorrectly. It is empty!"),
         };
 
+        println!("Parent: {}, offset: {}", parent_piece_id, parent_offset);
+
         let insertion_offset = self.additions.len();
         let insertion_piece_index = self.add_piece(Piece {
             id: 0,
@@ -112,12 +114,9 @@ impl FromStr for PieceTable {
 impl Display for PieceTable {
     fn fmt(&self, formatter: &mut Formatter) -> DisplayResult {
         let mut txt = String::new();
-        for possible_piece in &self.pieces {
-            let piece = match possible_piece {
-                Some(piece) => piece,
-                None => continue,
-            };
+        let mut possible_piece = &self.pieces[0];
 
+        while let Some(piece) = possible_piece {
             match piece.source {
                 Source::Origin => {
                     for index in piece.offset..piece.offset + piece.length {
@@ -130,7 +129,13 @@ impl Display for PieceTable {
                     }
                 }
             }
+
+            match piece.child_id {
+                Some(id) => possible_piece = &self.pieces[id],
+                None => possible_piece = &None,
+            }
         }
+
         write!(formatter, "{}", txt)
     }
 }
@@ -174,8 +179,12 @@ impl Piece {
             let index = index_offset + i;
             if line_count <= line && character_count == character {
                 return (self.id, index);
+            } else {
+                println!("Line_count {}", line_count);
+                println!("character_count {}", character_count);
             }
 
+            character_count += 1;
             let current_character = source[self.offset + index];
 
             if current_character == '\n' {

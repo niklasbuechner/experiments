@@ -7,7 +7,8 @@ use std::str::FromStr;
 fn insert_at_beginning_small_file() {
     let mut buffer = piece_table::PieceTable::from_str(small_file_contents()).unwrap();
 
-    buffer.insert(0, 0, &mut "Hello".to_string());
+    buffer.insert(0, 0, &mut "Heo".to_string());
+    buffer.insert(0, 2, &mut "ll".to_string());
 
     assert_eq!(
         "Hello<?php
