@@ -128,11 +128,17 @@ impl ContentManager for PieceTable {
                 let length = piece.length;
                 piece.length = delete_start_offset;
 
+                let new_piece_length = if length as i64 - delete_end_offset as i64 - 1 < 0 {
+                    0
+                } else {
+                    length - delete_end_offset - 1
+                };
+
                 new_piece = Piece {
                     id: 0,
                     source: piece.source,
                     offset: piece.offset + delete_end_offset + 1,
-                    length: length - delete_end_offset - 1,
+                    length: new_piece_length,
                     child_id: piece.child_id,
                 };
             },
