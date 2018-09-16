@@ -1,33 +1,34 @@
-// extern crate gap;
+extern crate piece_table;
 
-// use std::str::FromStr;
+use piece_table::ContentManager;
+use std::str::FromStr;
 
-// #[test]
-// fn delete_at_beginning_small_file() {
-//     let mut buffer = gap::GapBuffer::from_str(small_file_contents()).unwrap();
+#[test]
+fn delete_at_beginning_small_file() {
+    let mut buffer = piece_table::PieceTable::from_str(small_file_contents()).unwrap();
 
-//     buffer.delete(0,0, 0,1);
+    buffer.delete(0,0, 0,1);
 
-//     assert_eq!("php
-// namespace Hello\\World;
+    assert_eq!("php
+namespace Hello\\World;
 
-// /**
-//  * Hello world class.
-//  */
-// class HelloWorld
-// {
-//     /**
-//      * Function to say hi.
-//      *
-//      * @return string
-//      */
-//     public function hi()
-//     {
-//         return \"hi\";
-//     }
-// }
-// ", format!("{}", buffer));
-// }
+/**
+ * Hello world class.
+ */
+class HelloWorld
+{
+    /**
+     * Function to say hi.
+     *
+     * @return string
+     */
+    public function hi()
+    {
+        return \"hi\";
+    }
+}
+", format!("{}", buffer));
+}
 
 // #[test]
 // fn delete_at_end_small_file() {
@@ -114,3 +115,26 @@
 // }
 // ";
 // }
+
+fn small_file_contents<'a>() -> &'a str {
+    return "<?php
+namespace Hello\\World;
+
+/**
+ * Hello world class.
+ */
+class HelloWorld
+{
+    /**
+     * Function to say hi.
+     *
+     * @return string
+     */
+    public function hi()
+    {
+        return \"hi\";
+    }
+}
+";
+}
+

@@ -94,6 +94,57 @@ impl ContentManager for PieceTable {
         self.additions.append(&mut insert.chars().collect());
         println!("{:?}", self);
     }
+
+    fn delete(&mut self, start_line: u64, start_character:u64, end_line: u64, end_character: u64) {
+        let (mut delete_start_piece_id, mut delete_start_offset) = match &self.pieces[0] {
+            Some(piece) => piece.get_insertion_location(self, start_line, start_character, 0, 0),
+            None => panic!("Piece Table initialized incorrectly. It is empty!"),
+        };
+        let (delete_end_piece_id, delete_end_offset) = match &self.pieces[0] {
+            Some(piece) => piece.get_insertion_location(self, end_line, end_character, 0, 0),
+            None => panic!("Piece Table initialized incorrectly. It is empty!"),
+        };
+
+        println!("start_piece_id: {}", delete_start_piece_id);
+        println!("start_piece_offset: {}", delete_start_offset);
+        println!("end_piece_id: {}", delete_end_piece_id);
+        println!("end_piece_offset: {}", delete_end_offset);
+
+        while delete_start_piece_id != delete_end_piece_id {
+            match &mut self.pieces[delete_start_piece_id] {
+                Some(piece) => {
+                    piece.length = delete_start_offset;
+
+                    delete_start_piece_id = piece.child_id.unwrap();
+                    delete_start_offset = 0;
+                },
+                None => panic!("Request none existing piece."),
+            }
+        }
+
+        let new_piece;
+        match &mut self.pieces[delete_start_piece_id] {
+            Some(piece) => {
+                let length = piece.length;
+                piece.length = delete_start_offset;
+
+                new_piece = Piece {
+                    id: 0,
+                    source: piece.source,
+                    offset: piece.offset + delete_end_offset + 1,
+                    length: length - delete_end_offset - 1,
+                    child_id: piece.child_id,
+                };
+            },
+            None => panic!("Well, the piece still does not exist"),
+        }
+
+        let new_piece_id = self.add_piece(new_piece);
+        match &mut self.pieces[delete_start_piece_id] {
+            Some(piece) => piece.child_id = Some(new_piece_id),
+            None => panic!("The piece was just there, how did it vanish?"),
+        }
+    }
 }
 impl FromStr for PieceTable {
     type Err = ParseCharError;
