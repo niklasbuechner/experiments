@@ -40,8 +40,6 @@ impl ContentManager for PieceTable {
             None => panic!("Piece Table initialized incorrectly. It is empty!"),
         };
 
-        println!("Parent: {}, offset: {}", parent_piece_id, parent_offset);
-
         let insertion_offset = self.additions.len();
         let insertion_piece_index = self.add_piece(Piece {
             id: 0,
@@ -92,7 +90,6 @@ impl ContentManager for PieceTable {
         }
 
         self.additions.append(&mut insert.chars().collect());
-        println!("{:?}", self);
     }
 
     fn delete(&mut self, start_line: u64, start_character:u64, end_line: u64, end_character: u64) {
@@ -104,11 +101,6 @@ impl ContentManager for PieceTable {
             Some(piece) => piece.get_insertion_location(self, end_line, end_character, 0, 0),
             None => panic!("Piece Table initialized incorrectly. It is empty!"),
         };
-
-        println!("start_piece_id: {}", delete_start_piece_id);
-        println!("start_piece_offset: {}", delete_start_offset);
-        println!("end_piece_id: {}", delete_end_piece_id);
-        println!("end_piece_offset: {}", delete_end_offset);
 
         while delete_start_piece_id != delete_end_piece_id {
             match &mut self.pieces[delete_start_piece_id] {
@@ -236,9 +228,6 @@ impl Piece {
             let index = index_offset + i;
             if line_count >= line && character_count == character {
                 return (self.id, index);
-            } else {
-                println!("Line_count {}", line_count);
-                println!("character_count {}", character_count);
             }
 
             character_count += 1;
@@ -260,9 +249,6 @@ impl Piece {
         // Insert after last character
         if line_count >= line && character_count == character {
             return (self.id, self.length);
-        } else {
-            println!("Line_count {}", line_count);
-            println!("character_count {}", character_count);
         }
 
         let child_id = match self.child_id {
