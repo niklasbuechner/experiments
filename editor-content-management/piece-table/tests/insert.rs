@@ -1,33 +1,34 @@
-// extern crate gap;
+extern crate piece_table;
 
-// use std::str::FromStr;
+use std::str::FromStr;
+use piece_table::ContentManager;
 
-// #[test]
-// fn insert_at_beginning_small_file() {
-//     let mut buffer = gap::GapBuffer::from_str(small_file_contents()).unwrap();
+#[test]
+fn insert_at_beginning_small_file() {
+    let mut buffer = piece_table::PieceTable::from_str(small_file_contents()).unwrap();
 
-//     buffer.insert(0,0, &mut "Hello".to_string());
+    buffer.insert(0,0, &mut "Hello".to_string());
 
-//     assert_eq!("Hello<?php
-// namespace Hello\\World;
+    assert_eq!("Hello<?php
+namespace Hello\\World;
 
-// /**
-//  * Hello world class.
-//  */
-// class HelloWorld
-// {
-//     /**
-//      * Function to say hi.
-//      *
-//      * @return string
-//      */
-//     public function hi()
-//     {
-//         return \"hi\";
-//     }
-// }
-// ", format!("{}", buffer));
-// }
+/**
+ * Hello world class.
+ */
+class HelloWorld
+{
+    /**
+     * Function to say hi.
+     *
+     * @return string
+     */
+    public function hi()
+    {
+        return \"hi\";
+    }
+}
+", format!("{}", buffer));
+}
 
 // #[test]
 // fn insert_at_end_small_file() {
@@ -110,24 +111,24 @@
 // ", format!("{}", buffer));
 // }
 
-// fn small_file_contents<'a>() -> &'a str {
-//     return "<?php
-// namespace Hello\\World;
+fn small_file_contents<'a>() -> &'a str {
+    return "<?php
+namespace Hello\\World;
 
-// /**
-//  * Hello world class.
-//  */
-// class HelloWorld
-// {
-//     /**
-//      * Function to say hi.
-//      *
-//      * @return string
-//      */
-//     public function hi()
-//     {
-//         return \"hi\";
-//     }
-// }
-// ";
-// }
+/**
+ * Hello world class.
+ */
+class HelloWorld
+{
+    /**
+     * Function to say hi.
+     *
+     * @return string
+     */
+    public function hi()
+    {
+        return \"hi\";
+    }
+}
+";
+}
