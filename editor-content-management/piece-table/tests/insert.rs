@@ -1,15 +1,16 @@
 extern crate piece_table;
 
-use std::str::FromStr;
 use piece_table::ContentManager;
+use std::str::FromStr;
 
 #[test]
 fn insert_at_beginning_small_file() {
     let mut buffer = piece_table::PieceTable::from_str(small_file_contents()).unwrap();
 
-    buffer.insert(0,0, &mut "Hello".to_string());
+    buffer.insert(0, 0, &mut "Hello".to_string());
 
-    assert_eq!("Hello<?php
+    assert_eq!(
+        "Hello<?php
 namespace Hello\\World;
 
 /**
@@ -27,7 +28,9 @@ class HelloWorld
         return \"hi\";
     }
 }
-", format!("{}", buffer));
+",
+        format!("{}", buffer)
+    );
 }
 
 // #[test]

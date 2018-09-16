@@ -4,7 +4,8 @@ use std::str::FromStr;
 
 #[test]
 fn to_string() {
-    let buffer = piece_table::PieceTable::from_str("<?php
+    let buffer = piece_table::PieceTable::from_str(
+        "<?php
 namespace Hello\\World;
 
 /**
@@ -22,9 +23,11 @@ class HelloWorld
         return \"hi\";
     }
 }
-").unwrap();
+",
+    ).unwrap();
 
-    assert_eq!("<?php
+    assert_eq!(
+        "<?php
 namespace Hello\\World;
 
 /**
@@ -42,5 +45,7 @@ class HelloWorld
         return \"hi\";
     }
 }
-", format!("{}", buffer));
+",
+        format!("{}", buffer)
+    );
 }

@@ -18,7 +18,7 @@ impl PieceTable {
                     self.pieces[index] = Some(piece);
                     return index;
                 }
-                _ => {},
+                _ => {}
             }
         }
 
@@ -67,15 +67,21 @@ impl ContentManager for PieceTable {
                 parent_piece_text_length = piece.length;
                 parent_piece_child_id = piece.child_id;
                 piece.length = piece.length - (piece.length - parent_offset);
-            },
-            None => panic!("A non existent piece in the piece table was requested")
+            }
+            None => panic!("A non existent piece in the piece table was requested"),
         };
 
         let second_parent_piece_index = self.add_piece(split_piece);
 
         match &mut self.pieces[insertion_piece_index] {
-            Some(piece) => piece.child_id = if parent_piece_text_length == parent_offset { parent_piece_child_id } else { Some(second_parent_piece_index) },
-            _  => panic!("This should not happen"),
+            Some(piece) => {
+                piece.child_id = if parent_piece_text_length == parent_offset {
+                    parent_piece_child_id
+                } else {
+                    Some(second_parent_piece_index)
+                }
+            }
+            _ => panic!("This should not happen"),
         };
 
         match &mut self.pieces[parent_piece_id] {
@@ -85,7 +91,6 @@ impl ContentManager for PieceTable {
 
         self.additions.append(&mut insert.chars().collect());
         println!("{:?}", self);
-
     }
 }
 impl FromStr for PieceTable {
@@ -118,12 +123,12 @@ impl Display for PieceTable {
                     for index in piece.offset..piece.offset + piece.length {
                         txt.push(self.origin[index]);
                     }
-                },
+                }
                 Source::Additions => {
                     for index in piece.offset..piece.offset + piece.length {
                         txt.push(self.additions[index]);
                     }
-                },
+                }
             }
         }
         write!(formatter, "{}", txt)
@@ -155,7 +160,7 @@ impl Piece {
         line: u64,
         character: u64,
         last_line_count: u64,
-        last_character_count: u64
+        last_character_count: u64,
     ) -> (usize, usize) {
         let source = match self.source {
             Source::Origin => &table.origin,
@@ -192,7 +197,9 @@ impl Piece {
         };
 
         match &table.pieces[child_id] {
-            Some(child) => child.get_insertion_location(table, line, character, line_count, character_count),
+            Some(child) => {
+                child.get_insertion_location(table, line, character, line_count, character_count)
+            }
             None => return (self.id, self.length - 1),
         }
     }
