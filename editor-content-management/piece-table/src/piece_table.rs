@@ -177,7 +177,7 @@ impl Piece {
         let mut character_count = last_character_count;
         for i in 0..self.length {
             let index = index_offset + i;
-            if line_count <= line && character_count == character {
+            if line_count >= line && character_count == character {
                 return (self.id, index);
             } else {
                 println!("Line_count {}", line_count);
