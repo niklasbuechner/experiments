@@ -1,6 +1,9 @@
 mod piece_table;
+mod contents;
 
 pub use piece_table::PieceTable;
+pub use contents::big_file_contents;
+pub use contents::small_file_contents;
 
 pub trait ContentManager {
     fn insert(&mut self, line: u64, character: u64, insert: &mut String);
