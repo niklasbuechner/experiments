@@ -3,6 +3,14 @@ This repository contains some of my programming experiments.
 (None of these experiments claim to be fully functioning code snippets but rather an adventure into how the given
 function could be implemented.)
 
+## Algorithms
+
+### Base64
+A test implementation of base64 for Strings only according to the spec:
+[https://tools.ietf.org/html/rfc4648](https://tools.ietf.org/html/rfc4648)
+
+The implementation is in the `base64` folder.
+
 ## Editor content management
 In order to learn how text editors manage the actual text input in memory, I implemented two possible algorithms
 for it.
