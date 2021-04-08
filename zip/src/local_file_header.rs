@@ -66,7 +66,7 @@ pub struct LocalFileHeaderBitFlags {
 }
 impl LocalFileHeaderBitFlags {
     pub fn is_encrypted(&self) -> bool {
-        return self.flags & 0b1000_0000_0000_0000 != 0;
+        return self.flags & 0b0000_0000_0000_0001 != 0;
     }
 }
 
