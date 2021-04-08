@@ -1,7 +1,9 @@
 pub(crate) mod central_directory_file_header;
+pub(crate) mod end_of_central_directory_file_header;
 pub(crate) mod local_file_header;
 
 use central_directory_file_header::CentralDirectoryFileHeader;
+use end_of_central_directory_file_header::EndOfCentralDirectoryRecord;
 use local_file_header::LocalFileHeader;
 use std::fs::File;
 use std::io::Read;
@@ -47,11 +49,10 @@ fn main() -> Result<()> {
         } else if signature_value == 0x02014b50 {
             let central_directory_header = CentralDirectoryFileHeader::new(&mut file)?;
             println!("{:#?}", central_directory_header);
+        } else if signature_value == 0x06054b50 {
+            let end_of_central_directory_file_header = EndOfCentralDirectoryRecord::new(&mut file)?;
+            println!("{:#?}", end_of_central_directory_file_header);
         } else {
-            if signature_value == 0x06054b50 {
-                println!("End of Central Directory Record");
-            }
-
             println!("Signature value {:x}", signature_value);
             break;
         }
