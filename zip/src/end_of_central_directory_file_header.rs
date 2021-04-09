@@ -15,10 +15,10 @@ pub struct EndOfCentralDirectoryRecord {
 }
 impl EndOfCentralDirectoryRecord {
     pub fn new(file: &mut File) -> Result<Self> {
-        let mut local_file_header_buffer = [0; 26];
+        let mut local_file_header_buffer = [0; 18];
         file.read(&mut local_file_header_buffer)?;
 
-        let comment_length = to_u16(&local_file_header_buffer, 22);
+        let comment_length = to_u16(&local_file_header_buffer, 16);
         let mut comment_buffer = vec![0u8; comment_length as usize];
         file.read(&mut comment_buffer)?;
         let comment =
@@ -38,12 +38,12 @@ impl EndOfCentralDirectoryRecord {
 }
 
 #[inline(always)]
-fn to_u16(buffer: &[u8; 26], index: usize) -> u16 {
+fn to_u16(buffer: &[u8; 18], index: usize) -> u16 {
     return u16::from_le_bytes([buffer[index], buffer[index + 1]]);
 }
 
 #[inline(always)]
-fn to_u32(buffer: &[u8; 26], index: usize) -> u32 {
+fn to_u32(buffer: &[u8; 18], index: usize) -> u32 {
     return u32::from_le_bytes([
         buffer[index],
         buffer[index + 1],
