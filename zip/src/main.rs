@@ -12,6 +12,10 @@ use std::io::Seek;
 use std::io::SeekFrom;
 use std::process::exit;
 
+const CENTRAL_DIRECTORY_FILE_HEADER_SIGNATURE: u32 = 0x02014b50;
+const END_OF_CENTRAL_DIRECTORY_RECORD_SIGNATURE: u32 = 0x06054b50;
+const LOCAL_FILE_HEADER_SIGNATURE: u32 = 0x04034b50;
+
 fn main() -> Result<()> {
     println!("Listing zip contents!");
     let mut file = File::open("./test-data.zip").unwrap();
@@ -29,7 +33,7 @@ fn main() -> Result<()> {
     file.read(&mut signature)?;
     let signature_value = u32::from_le_bytes(signature);
     let end_of_central_directory_file_header;
-    if signature_value == 0x06054b50 {
+    if signature_value == END_OF_CENTRAL_DIRECTORY_RECORD_SIGNATURE {
         end_of_central_directory_file_header = EndOfCentralDirectoryRecord::new(&mut file)?;
     } else {
         println!("Zip file does not end with an end of central directory entry or the entry contains a comment. {:X}", signature_value);
@@ -45,10 +49,10 @@ fn main() -> Result<()> {
         file.read(&mut signature)?;
         let signature_value = u32::from_le_bytes(signature);
 
-        if signature_value == 0x02014b50 {
+        if signature_value == CENTRAL_DIRECTORY_FILE_HEADER_SIGNATURE {
             let file = CentralDirectoryFileHeader::new(&mut file)?;
             files.push(file);
-        } else if signature_value == 0x06054b50 {
+        } else if signature_value == END_OF_CENTRAL_DIRECTORY_RECORD_SIGNATURE {
             // We have read all entry records, break.
             break;
         } else {
